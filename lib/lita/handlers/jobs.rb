@@ -3,6 +3,10 @@ require 'yajm/job_manager'
 module Lita
   module Handlers
     class Jobs < Handler
+
+      config :jobs_base_url
+      config :jobs_output_dir
+
       route /^jobs\slist$/, :job_list,
         :help => { 'jobs list' => t('help.job_list') }
       route /^jobs\skill\s(\d+)$/, :job_kill,
@@ -38,7 +42,15 @@ module Lita
 
       def job_output(response)
         in_job(response) do |job|
-          response.reply(job.output)
+          filename = job.pid + '.txt'
+          fullpath = config.jobs_output_dir
+          fullpath << '/' unless fullpath.end_with?('/')
+          fullpath << filename
+          url = config.jobs_base_url
+          url << '/' unless url.end_with?('/')
+          url << filename
+          File.open(fullpath, 'w') {|f| f.write(job.output) }
+          response.reply("Job ID #{job.pid} full log available at: #{url}")
         end
       end
 
