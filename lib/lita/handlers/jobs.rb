@@ -42,18 +42,9 @@ module Lita
 
       def job_output(response)
         in_job(response) do |job|
-          filename = ''
-          url = ''
-          fullpath = ''
           filename = job.pid.to_s + '.txt'
-          fullpath = config.jobs_output_dir
-          fullpath << '/' unless fullpath.end_with?('/')
-          fullpath << filename
-          url = config.jobs_base_url
-          url << '/' unless url.end_with?('/')
-          url << filename
-          File.open(fullpath, 'w') {|f| f.write(job.output) }
-          response.reply("Job ID #{job.pid} full log available at: #{url}")
+          File.open(config.jobs_output_dir + filename, 'w') {|f| f.write(job.output) }
+          response.reply("Job ID #{job.pid} full log available at: #{config.jobs_base_url + filename}")
         end
       end
 
