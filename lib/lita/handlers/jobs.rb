@@ -42,6 +42,9 @@ module Lita
 
       def job_output(response)
         in_job(response) do |job|
+          filename = ''
+          url = ''
+          fullpath = ''
           filename = job.pid.to_s + '.txt'
           fullpath = config.jobs_output_dir
           fullpath << '/' unless fullpath.end_with?('/')
