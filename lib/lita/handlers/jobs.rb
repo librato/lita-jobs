@@ -42,9 +42,10 @@ module Lita
 
       def job_output(response)
         in_job(response) do |job|
-          filename = job.pid.to_s + '.txt'
-          File.open(config.jobs_output_dir + filename, 'w') {|f| f.write(job.output) }
-          response.reply("Job ID #{job.pid} full log available at: #{config.jobs_base_url + filename}")
+          # filename = job.pid.to_s + '.txt'
+          # File.open(config.jobs_output_dir + filename, 'w') {|f| f.write(job.output) }
+          # response.reply("Job ID #{job.pid} full log available at: #{config.jobs_base_url + filename}")
+          response.reply("'jobs out' is temporarily disabled; please use 'jobs tail <pid>'")
         end
       end
 
