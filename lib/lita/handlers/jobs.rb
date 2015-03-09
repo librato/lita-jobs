@@ -44,7 +44,7 @@ module Lita
         in_job(response) do |job|
           filename = job.pid.to_s + '.txt'
           File.open(config.jobs_output_dir + filename, 'w') {|f| f.write(job.output) }
-          response.reply("Job ID #{job.pid.to_s} full log available at: #{config.jobs_base_url + filename}")
+          response.reply("Job ID #{job.pid.to_s} full log available at: #{config.jobs_base_url + filename} (you must be connected to the VPN)")
           # response.reply("'jobs out' is temporarily disabled; please use 'jobs tail <pid>'")
         end
       end
